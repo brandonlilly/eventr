@@ -9,14 +9,12 @@ import { renderFullPage } from './utils'
 import routes from '../app/routes'
 import Provider from '../app/components/Provider'
 
-// import App from '../app/components/App'
-
 import data from './event'
 
 const app = Express()
 const port = 3000
 
-app.use('/generated', Express.static('dist/generated'))
+app.use('/', Express.static('dist'))
 app.use('/', handleRender)
 
 let template = fs.readFileSync(path.resolve(__dirname, 'template/index.hbs'), "utf-8")

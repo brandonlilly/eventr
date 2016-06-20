@@ -10,6 +10,8 @@ export default class TemplatePage extends Component {
   }
 
   render() {
+    const { template, styling } = this.context.store
+
     return (
       <div className="TemplatePage">
         <Banner>
@@ -18,8 +20,18 @@ export default class TemplatePage extends Component {
         <div className="content">
           <h1>Upload</h1>
           <Uploader onDrop={files => this.onDrop(files)}/>
+          <pre>
+            {template}
+          </pre>
+          <pre>
+            {styling}
+          </pre>
         </div>
       </div>
     )
   }
+}
+
+TemplatePage.contextTypes = {
+  store: React.PropTypes.object
 }

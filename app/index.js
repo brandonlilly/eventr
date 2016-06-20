@@ -9,11 +9,11 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const history = browserHistory
-const { template, data } = window.__STATE__
+const state = window.__STATE__
 
 match({ history, routes }, (error, redirectLocation, renderProps) => {
   ReactDOM.render(
-    <Provider store={{ template, data }}>
+    <Provider store={state}>
       <Router {...renderProps} />
     </Provider>,
     document.getElementById('root')

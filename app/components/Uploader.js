@@ -7,9 +7,8 @@ export default class Uploader extends Component {
       <Dropzone
         {...this.props}
         className="Uploader"
-        activeClassName="active"
-      >
-        <div>Try dropping some files here, or click to select files to upload.</div>
+        activeClassName="active">
+        <svg className="icon-upload-1"><use xlinkHref="/images/icons.svg#icon-upload-1"></use></svg>
       </Dropzone>
     )
   }
