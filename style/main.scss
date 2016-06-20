@@ -1,1 +1,107 @@
 @import 'reset';
+
+html {
+  font-size: 10px;
+}
+
+body {
+  background: rgb(251, 251, 250);
+  font-size: 2rem;
+  line-height: 3.2rem;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: rgb(100, 114, 119);
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+.Banner {
+  background: #1a5161;
+  background-image: linear-gradient(
+    -38deg,
+    transparent,
+    transparent 48%,
+    rgba(255,255,255,0.03) 48%
+  );
+  color: rgb(251, 251, 250);
+  margin-bottom: 6rem;
+}
+
+.Nav {
+  $height: 8rem;
+
+  height: $height;
+  line-height: $height;
+
+  .logo {
+    font-size: 2.8rem;
+    letter-spacing: -0.8px;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+    font-weight: bold;
+    text-decoration: none;
+    color: inherit;
+    span {}
+  }
+
+  ul {
+    float: right;
+    list-style: none;
+    white-space: nowrap;
+    text-decoration: none;
+
+    li {
+      display: inline-block;
+      padding-left: 6rem;
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+  }
+}
+
+
+.Hero {
+  padding: 6rem 0;
+  border-bottom: 2rem solid rgba(0,0,0,0.08);
+  text-align: center;
+  height: 35rem;
+
+  h1 {
+    font-size: 3.4rem;
+  }
+}
+
+.EventDisplay {
+}
+
+.Footer {
+  margin-top: 16rem;
+  height: 28rem;
+  background: #1f3f53;
+  border-top: 8rem solid #255260;
+}
+
+.Uploader {
+  $size: 128px;
+
+  width: $size;
+  height: $size;
+  margin: 10px;
+  padding: 5px;
+
+  border: 2px solid rgb(126, 204, 160);
+  cursor: pointer;
+  font-size: 1rem;
+
+  &.active {
+    border: 2px solid rgb(204, 173, 126);
+  }
+}
