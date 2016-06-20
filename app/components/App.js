@@ -5,15 +5,9 @@ import Footer from './Footer'
 import Hero from './Hero'
 import Nav from './Nav'
 
-const App = ({ template, data }) =>
+const App = ({ template, data, children }) =>
   <div className="App">
-    <Banner>
-      <Nav/>
-      <Hero/>
-    </Banner>
-    <div className="content">
-      <EventDisplay template={template} data={data}/>
-    </div>
+    { children }
     <Footer/>
   </div>
 

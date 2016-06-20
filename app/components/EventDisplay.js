@@ -58,10 +58,10 @@ function transformData(data) {
 
 export default class EventDisplay extends Component {
   render() {
-    const { template, data } = this.props
+    const { template, event } = this.props
 
-    const event = transformData(data)
-    const html = Handlebars.compile(template)(event)
+    const formattedEvent = transformData(event)
+    const html = Handlebars.compile(template)(formattedEvent)
 
     return (
       <article

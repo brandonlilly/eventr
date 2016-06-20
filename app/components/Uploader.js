@@ -6,7 +6,7 @@ export default class Uploader extends Component {
     return (
       <Dropzone
         {...this.props}
-        className="Upload"
+        className="Uploader"
         activeClassName="active"
       >
         <div>Try dropping some files here, or click to select files to upload.</div>

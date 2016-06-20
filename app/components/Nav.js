@@ -1,13 +1,21 @@
 import React from 'react'
+import { Link } from 'react-router'
+
+const NavLink = ({ name, to }) =>
+  <li>
+    <Link to={to} activeClassName="active" onlyActiveOnIndex={true}>
+      {name}
+    </Link>
+  </li>
 
 const Nav = () =>
   <nav className="Nav content">
-    <a className="logo" href="/">
+    <Link to='/' className="logo">
       e<span>ventr</span>
-    </a>
+    </Link>
     <ul>
-      <li>feed</li>
-      <li>template</li>
+      <NavLink to="/" name="feed" />
+      <NavLink to="/template" name="template" />
     </ul>
   </nav>
 
