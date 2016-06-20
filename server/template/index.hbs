@@ -1,0 +1,25 @@
+<div class='container'>
+  <h1>{{title}}</h1>
+  <p>
+    Don't miss out on this event!
+    <div>When: {{when}}</div>
+    <div>Where: {{where}}</div>
+  </p>
+  <ul class='agenda'>
+    {{#each agenda_items}}
+      <li>
+        <span class='agenda-time'>{{time}}</span>
+        <span class='agenda-description'>{{description}}</span>
+      </li>
+    {{/each}}
+  </ul>
+  <ul class='presenters'>
+    {{#each presenters}}
+      <li>
+        <img class='presenter-image' src='{{image}}' />
+        <h3 class='presenter-name'>{{name}}</h3>
+        <div class='presenter-bio'>{{bio}}</span>
+      </li>
+    {{/each}}
+  </ul>
+</div>

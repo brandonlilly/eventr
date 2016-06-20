@@ -6,7 +6,9 @@ if (process.env.NODE_ENV !== 'production') {
   console.log('bundle loaded')
 }
 
+const { template, data } = window.__STATE__
+
 ReactDOM.render(
-  <App/>,
+  <App template={template} data={data} />,
   document.getElementById('root')
 )
