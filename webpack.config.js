@@ -36,7 +36,12 @@ const config = env => ({
 
   plugins: [
     extractSASS,
-  ],
+  ].concat(!env.prod ? [] : [
+    new webpack.optimize.DedupePlugin(),
+    new webpack.LoaderOptionsPlugin({ minimize: true, debug: false }),
+    new webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"production"' } }),
+    new webpack.optimize.UglifyJsPlugin({ compress: { screw_ie8: true, warnings: false }}),
+  ]),
 });
 
 module.exports = config;
