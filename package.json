@@ -1,0 +1,40 @@
+{
+  "name": "eventr",
+  "version": "0.0.0",
+  "description": "event templating",
+  "main": "app/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brandonlilly/eventr"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --progress --env.dev",
+    "build:prod": "webpack --progress --env.prod",
+    "watch": "webpack -w --progress --env.dev",
+    "watch:server": "babel-watch server/server.js",
+    "start": "babel-node server/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015-webpack": "^6.4.1",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-2": "^6.5.0",
+    "babel-watch": "^2.0.2",
+    "css-loader": "^0.23.1",
+    "express": "^4.14.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "node-sass": "^3.8.0",
+    "sass-loader": "^3.2.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.1.0-beta.13"
+  },
+  "dependencies": {
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0"
+  }
+}
