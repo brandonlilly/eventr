@@ -5,7 +5,7 @@ import Banner from './Banner'
 import Nav from './Nav'
 import Uploader from './Uploader'
 import { getFileContents } from '../utils'
-import { getStyling, getTemplate, setStyling } from '../redux'
+import { getStyling, getTemplate, setStyling } from '../store'
 
 class TemplatePage extends Component {
   onDrop(files) {

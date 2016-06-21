@@ -11,8 +11,8 @@ import routes from '../app/routes'
 import busboy from 'connect-busboy'
 import { StringDecoder } from 'string_decoder'
 import morgan from 'morgan'
-import configureStore from '../app/redux/configureStore'
-import { setStyling, setTemplate, setCurrentEvent } from '../app/redux'
+import configureStore from '../app/store/configureStore'
+import { setStyling, setTemplate, setCurrentEvent } from '../app/store'
 
 const app = Express()
 const port = 3000

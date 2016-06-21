@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import { Router, match, browserHistory } from 'react-router'
 import routes from './routes'
 import { Provider } from 'react-redux'
-import configureStore from './redux/configureStore'
+import configureStore from './store/configureStore'
 
 if (process.env.NODE_ENV !== 'production') {
   console.log('bundle loaded')

@@ -5,7 +5,7 @@ import EventDisplay from './EventDisplay'
 import Footer from './Footer'
 import Hero from './Hero'
 import Nav from './Nav'
-import { getStyling, getCurrentEvent, getTemplate } from '../redux'
+import { getStyling, getCurrentEvent, getTemplate } from '../store'
 
 const HomePage = ({ template, event, styling }) =>
   <div className="HomePage">
