@@ -64,11 +64,21 @@ h1, h2, h3, h4, h5, h6 {
       padding-left: 6rem;
       font-size: 1.6rem;
       font-weight: bold;
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
     }
+  }
+}
+
+a.NavLink {
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 2px solid rgba(0,0,0,0);
+  padding: 0.6rem 0;
+
+  &.active {
+    border-color: hsl(195, 32%, 34%);
+  }
+  &:hover {
+    color: hsl(195, 32%, 50%);
   }
 }
 
@@ -92,9 +102,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .Footer {
   margin-top: 16rem;
-  height: 28rem;
+  height: 31rem;
   background: #184b59;
-  border-top: 8rem solid #255260;
+  border-top: 5rem solid #255260;
 }
 
 .Uploader {

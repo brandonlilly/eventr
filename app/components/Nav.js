@@ -3,7 +3,10 @@ import { Link } from 'react-router'
 
 const NavLink = ({ name, to }) =>
   <li>
-    <Link to={to} activeClassName="active" onlyActiveOnIndex={true}>
+    <Link to={to}
+      className="NavLink"
+      activeClassName="active"
+      onlyActiveOnIndex={true} >
       {name}
     </Link>
   </li>
