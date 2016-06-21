@@ -20,7 +20,7 @@ export function formatDate(dateStr) {
 export const formatTime = (dateStr) => {
   const date = new Date(dateStr)
 
-  const period = date.getHours > 12 ? 'pm' : 'am'
+  const period = date.getHours() > 12 ? 'pm' : 'am'
   const minutes = date.getMinutes()
   let hours = date.getHours()
   hours = hours > 12 ? hours - 12 : hours
