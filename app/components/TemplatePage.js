@@ -18,7 +18,7 @@ export default class TemplatePage extends Component {
 
         fetch('/upload', { method: 'post', body: fd })
           .then(response => {
-            setStore({ ...store, styling: content })
+            setStore({ ...store, styling: contents })
           })
           .catch(error => {
             console.log('catch', error)
