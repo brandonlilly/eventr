@@ -74,11 +74,12 @@ a.NavLink {
   border-bottom: 2px solid rgba(0,0,0,0);
   padding: 0.6rem 0;
 
-  &.active {
-    border-color: hsl(195, 32%, 34%);
-  }
   &:hover {
     color: hsl(195, 32%, 50%);
+  }
+  &.active {
+    border-color: hsl(195, 32%, 34%);
+    color: inherit;
   }
 }
 
