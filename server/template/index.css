@@ -1,1 +1,22 @@
-.container {}
+.columns {
+  display: flex;
+  justify-content: space-between;
+}
+
+section {
+  width: 48%;
+  min-width: 40rem;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: normal;
+}
+
+.presenters {
+  list-style: none;
+}
+
+img {
+  height: 18rem;
+}

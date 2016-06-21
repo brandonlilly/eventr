@@ -5,7 +5,6 @@ export function renderFullPage(markup, state) {
       <head>
         <title>eventr</title>
         <link href="generated/styles.css" rel="stylesheet" type="text/css" />
-        <style>${state.styling}</style>
       </head>
       <body>
         <div id="root">${markup}</div>
