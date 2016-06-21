@@ -1,73 +1,21 @@
 import React, { Component } from 'react'
 import Handlebars from 'handlebars/dist/handlebars'
+import { formatDate, formatTime, transformData } from '../utils'
+import Frame from './Frame'
 
-const formatDate = (dateStr) => {
-  let date = new Date(dateStr)
-
-  const monthNames = [
-    "January", "February", "March",
-    "April", "May", "June", "July",
-    "August", "September", "October",
-    "November", "December"
-  ]
-
-  const day = date.getDate()
-  const month = monthNames[date.getMonth()]
-  const year = date.getFullYear()
-
-  return `${month} ${day}, ${year}`
-}
-
-const padleft = (str, width) => {
-  let result = str.toString()
-
-  while (result.length < width) {
-    result = '0' + result
-  }
-
-  return result
-}
-
-const formatTime = (dateStr) => {
-  const date = new Date(dateStr)
-
-  const period = date.getHours > 12 ? 'pm' : 'am'
-  const minutes = date.getMinutes()
-  let hours = date.getHours()
-  hours = hours > 12 ? hours - 12 : hours
-
-  return `${hours}:${padleft(minutes, 2)} ${period}`
-}
-
-function transformData(data) {
-  const { city, street, zip } = data.address
-  const when = formatDate(data.start_date)
-
-  let event = {
-    ...data,
-    agenda_items: data.agenda_items.map(item => ({
-      ...item,
-      time: formatTime(item.start),
-    })),
-    where: `${street} ${city}, ${zip}`,
-    when,
-  }
-
-  return event
-}
+console.log('Frame', Frame)
 
 export default class EventDisplay extends Component {
   render() {
-    const { template, event } = this.props
+    const { template, event, styling } = this.props
 
     const formattedEvent = transformData(event)
     const html = Handlebars.compile(template)(formattedEvent)
 
     return (
-      <article
-        className="EventDisplay"
-        dangerouslySetInnerHTML={{__html: html}}
-      />
+      <article className="EventDisplay">
+        <Frame styling={styling} html={html} />
+      </article>
     )
   }
 }

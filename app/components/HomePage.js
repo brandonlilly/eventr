@@ -44,14 +44,14 @@ const data = {
 
 // const template = `<div><h1>THE TEMPLATE</h1></div>`
 
-const HomePage = (prop, { store: { template, data } }) =>
+const HomePage = (prop, { store: { template, data, styling } }) =>
   <div className="HomePage">
     <Banner>
       <Nav/>
       <Hero/>
     </Banner>
     <div className="content">
-      <EventDisplay template={template} event={data} />
+      <EventDisplay template={template} event={data} styling={styling} />
     </div>
   </div>
 
