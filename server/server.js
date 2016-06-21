@@ -32,13 +32,39 @@ app.use('/', Express.static('dist'))
 app.post('/upload', busboy(), handleUpload)
 app.use('/', handleRender)
 
-function renderApp(props, res) {
+let cache = {
+  stale: true,
+  url: null,
+  page: null,
+}
+
+store.subscribe(() => {
+  cache.stale = true
+})
+
+function renderApp(props, req) {
+  if (req.url !== cache.url) {
+    cache.stale = true
+  }
+
+  if (!cache.stale) {
+    console.log('using cache')
+    return cache.page
+  }
+
   const markup = renderToString(
     <Provider store={store}>
       <RouterContext {...props}/>
     </Provider>
   )
-  return renderFullPage(markup, store.getState())
+
+  const page = renderFullPage(markup, store.getState())
+  
+  cache.page = page
+  cache.url = req.url
+  cache.stale = false
+
+  return page
 }
 
 function handleRender(req, res) {
@@ -48,7 +74,7 @@ function handleRender(req, res) {
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search)
     } else if (renderProps) {
-      res.status(200).send(renderApp(renderProps, res))
+      res.status(200).send(renderApp(renderProps, req))
     } else {
       res.status(404).send('Not found')
     }
