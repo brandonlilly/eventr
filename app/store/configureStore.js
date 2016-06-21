@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== 'production') {
   const createLogger = require('redux-logger')
   const logger = createLogger({
     collapsed: () => true,
-    predicate: () => true,
+    predicate: () => (typeof window !== 'undefined'),
   })
   middleware.push(logger)
 }
