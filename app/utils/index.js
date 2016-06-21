@@ -52,3 +52,12 @@ export function transformData(data) {
 
   return event
 }
+
+export function getContents(file, cb) {
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    const content = e.target.result
+    cb(content)
+  }
+  reader.readAsText(file)
+}

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Router, match, browserHistory } from 'react-router'
 import routes from './routes'
 import Provider from './components/Provider'
+import 'isomorphic-fetch'
 
 if (process.env.NODE_ENV !== 'production') {
   console.log('bundle loaded')

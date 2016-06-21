@@ -3,18 +3,18 @@ import React, { Component, Children, PropTypes } from 'react'
 export default class Provider extends Component {
   constructor(props, context) {
     super(props, context)
-    this.setStore(props.store)
+    this.state = { store: props.store }
   }
 
   getChildContext() {
     return {
-      store: this.store,
+      store: this.state.store,
       setStore: store => this.setStore(store)
     }
   }
 
   setStore(store) {
-    this.store = store
+    this.setState({ store })
   }
 
   render() {

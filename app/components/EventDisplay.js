@@ -3,8 +3,6 @@ import Handlebars from 'handlebars/dist/handlebars'
 import { formatDate, formatTime, transformData } from '../utils'
 import Frame from './Frame'
 
-console.log('Frame', Frame)
-
 export default class EventDisplay extends Component {
   render() {
     const { template, event, styling } = this.props

@@ -72,7 +72,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-
 .Hero {
   padding: 6rem 0;
   border-bottom: 2rem solid rgba(0,0,0,0.08);
@@ -129,8 +128,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .TemplatePage {
+  .columns {
+    display: flex;
+    justify-content: space-between;
+  }
+
   pre {
+    display: inline-block;
     font-size: 1.6rem;
+    width: 49%;
+    overflow-x: scroll;
+    padding: 15px 10px;
+
+    min-height: 60rem;
+
+    border: 1px solid rgba(0,0,0, 0.1);
+    border-radius: 6px;
   }
 }
 
