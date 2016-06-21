@@ -6,19 +6,25 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { RouterContext, match } from 'react-router'
 import { renderFullPage } from './utils'
+import { Provider } from 'react-redux'
 import routes from '../app/routes'
-import Provider from '../app/components/Provider'
 import busboy from 'connect-busboy'
 import { StringDecoder } from 'string_decoder'
 import morgan from 'morgan'
-
-import data from './event'
+import configureStore from '../app/redux/configureStore'
+import { setStyling, setTemplate, setCurrentEvent } from '../app/redux'
 
 const app = Express()
 const port = 3000
 
+import data from './event'
 let template = fs.readFileSync(path.resolve(__dirname, 'template/index.hbs'), "utf-8")
 let styling =  fs.readFileSync(path.resolve(__dirname, 'template/index.css'), "utf-8")
+
+const store = configureStore()
+store.dispatch(setStyling(styling))
+store.dispatch(setTemplate(template))
+store.dispatch(setCurrentEvent(data))
 
 const logger = morgan('tiny')
 app.use(logger)
@@ -27,13 +33,12 @@ app.post('/upload', busboy(), handleUpload)
 app.use('/', handleRender)
 
 function renderApp(props, res) {
-  const state = { template, data, styling }
   const markup = renderToString(
-    <Provider store={state}>
+    <Provider store={store}>
       <RouterContext {...props}/>
     </Provider>
   )
-  return renderFullPage(markup, state)
+  return renderFullPage(markup, store.getState())
 }
 
 function handleRender(req, res) {
@@ -53,8 +58,6 @@ function handleRender(req, res) {
 function handleUpload(req, res) {
   req.pipe(req.busboy)
   req.busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-    console.log('file uploading...')
-
     if (mimetype === 'text/css') {
       let contents = ''
       let decoder = new StringDecoder('utf8')
@@ -64,10 +67,9 @@ function handleUpload(req, res) {
       })
 
       file.on('end', () => {
-        styling = contents
+        store.dispatch(setStyling(contents))
       })
     }
-
   })
 
   req.busboy.on('error', error => {
@@ -76,9 +78,6 @@ function handleUpload(req, res) {
   })
 
   req.busboy.on('finish', () => {
-    console.log('done parsing')
-    // res.writeHead(303, { Connection: 'close', Location: '/' })
-    // res.end()
     res.status(200).send('success')
   })
 }

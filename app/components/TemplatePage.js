@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import Dropzone from 'react-dropzone'
 import Banner from './Banner'
 import Nav from './Nav'
 import Uploader from './Uploader'
-import { getContents } from '../utils'
+import { getFileContents } from '../utils'
+import { getStyling, getTemplate, setStyling } from '../redux'
 
-export default class TemplatePage extends Component {
+class TemplatePage extends Component {
   onDrop(files) {
-    const { store, setStore } = this.context
+    const { setStyling } = this.props
 
     files.forEach(file => {
-      getContents(file, contents => {
+      getFileContents(file, contents => {
         const fd = new FormData()
         files.forEach(file => {
           fd.append(file.name, file)
@@ -18,7 +20,7 @@ export default class TemplatePage extends Component {
 
         fetch('/upload', { method: 'post', body: fd })
           .then(response => {
-            setStore({ ...store, styling: contents })
+            setStyling(contents)
           })
           .catch(error => {
             console.log('catch', error)
@@ -28,7 +30,7 @@ export default class TemplatePage extends Component {
   }
 
   render() {
-    const { template, styling } = this.context.store
+    const { template, styling } = this.props
 
     return (
       <div className="TemplatePage">
@@ -52,7 +54,9 @@ export default class TemplatePage extends Component {
   }
 }
 
-TemplatePage.contextTypes = {
-  store: React.PropTypes.object,
-  setStore: React.PropTypes.func,
-}
+const mapStateToProps = (state, props) => ({
+  template: getTemplate(state),
+  styling: getStyling(state),
+})
+
+export default connect(mapStateToProps, { setStyling })(TemplatePage)
