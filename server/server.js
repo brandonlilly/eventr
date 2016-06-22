@@ -36,24 +36,17 @@ app.post('/styling', busboy(), handleStylingUpload)
 app.post('/template', busboy(), handleTemplateUpload)
 app.use('/', handleRender)
 
-let cache = {
-  stale: true,
-  url: null,
-  page: null,
-}
-
+let cache = {}
 store.subscribe(() => {
-  cache.stale = true
+  cache = {}
 })
 
 function renderApp(props, req) {
-  if (req.url !== cache.url) {
-    cache.stale = true
-  }
+  const url = req.url
 
-  if (!cache.stale) {
-    console.log('using cache')
-    return cache.page
+  if (cache[url]) {
+    console.log(`using cache for ${url}`)
+    return cache[url]
   }
 
   const markup = renderToString(
@@ -61,13 +54,8 @@ function renderApp(props, req) {
       <RouterContext {...props}/>
     </Provider>
   )
-
   const page = renderFullPage(markup, store.getState())
-
-  cache.page = page
-  cache.url = req.url
-  cache.stale = false
-
+  cache[url] = page
   return page
 }
 
