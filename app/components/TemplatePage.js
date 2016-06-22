@@ -7,32 +7,46 @@ import Uploader from './Uploader'
 import { getFileContents } from '../utils'
 import { getStyling, getTemplate, setStyling } from '../store'
 
+
+const UploadPane = ({ children, title, ...props }) =>
+  <Dropzone
+    {...props}
+    className="UploadPane"
+    multiple={false}
+    disableClick={true}
+    activeClassName="active">
+    <header>
+      <Uploader onDrop={props.onDrop}/>
+      <h1>{title}</h1>
+    </header>
+    <pre>
+      {children}
+    </pre>
+  </Dropzone>
+
+
 class TemplatePage extends Component {
-  onDrop(files) {
+  upload(file, action) {
     const { setStyling } = this.props
 
-    files.forEach(file => {
-      getFileContents(file, contents => {
-        const fd = new FormData()
-        files.forEach(file => {
-          fd.append(file.name, file)
-        })
+    getFileContents(file, contents => {
+      const fd = new FormData()
+      fd.append(file.name, file)
 
-        fetch('/upload', { method: 'post', body: fd })
-          .then(response => {
-            if (response.ok) {
-              setStyling(contents)
-            }
-          })
-          .catch(error => {
-            console.log('catch', error)
-          })
-      })
+      fetch('/upload', { method: 'post', body: fd })
+        .then(response => {
+          if (response.ok) {
+            action(contents)
+          }
+        })
+        .catch(error => {
+          console.log('catch', error)
+        })
     })
   }
 
   render() {
-    const { template, styling } = this.props
+    const { template, styling, setTemplate, setStyling } = this.props
 
     return (
       <div className="TemplatePage">
@@ -41,15 +55,16 @@ class TemplatePage extends Component {
         </Banner>
         <div className="content">
           <h1>Template</h1>
-          <p>Customize how your events are displayed. </p>
-          <Uploader onDrop={files => this.onDrop(files)}/>
+          <p>Customize how your events are displayed.</p>
+          <p>Upload a handlebar template (.hbs) or stylesheet file (.css)</p>
+
           <div className="columns">
-            <pre>
+            <UploadPane onDrop={files => this.upload(files[0], setTemplate)} title="Template">
               {template}
-            </pre>
-            <pre>
+            </UploadPane>
+            <UploadPane onDrop={files => this.upload(files[0], setStyling)} title="Style">
               {styling}
-            </pre>
+            </UploadPane>
           </div>
         </div>
       </div>

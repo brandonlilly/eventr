@@ -109,15 +109,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .Uploader {
-  $size: 128px;
-  $padding: 10px;
+  $size: 32px;
+  // $padding: 10px;
 
   width: $size;
   height: $size;
-  padding: $padding;
-  margin: 10px;
+  // padding: $padding;
+  // margin: 10px;
 
-  border: 2px dashed currentColor;
+  // border: 2px dashed currentColor;
   cursor: pointer;
   font-size: 1rem;
 
@@ -140,25 +140,58 @@ h1, h2, h3, h4, h5, h6 {
 
 .TemplatePage {
   h1 {
-    margin-bottom: 1.2rem;
+    margin-bottom: 2rem;
   }
 
   .columns {
     display: flex;
     justify-content: space-between;
+    margin-top: 3rem;
+  }
+}
+
+.UploadPane {
+  width: 49%;
+  display: inline-block;
+  font-size: 1.6rem;
+  min-height: 60rem;
+  border: 1px solid rgba(0,0,0, 0.1);
+  border-radius: 6px;
+
+  header {
+    $height: 4rem;
+
+    height: $height;
+    border-bottom: inherit;
+    position: relative;
+
+    h1 {
+      line-height: $height;
+      font-size: 2rem;
+      text-align: center;
+    }
+    .Uploader {
+      width: $height;
+      height: $height;
+      padding: 7px;
+      position: absolute;
+      right: 4px;
+      border: none;
+      margin: 0;
+    }
+  }
+  pre {
+    padding: 15px 10px;
+    overflow-x: scroll;
   }
 
-  pre {
-    display: inline-block;
-    font-size: 1.6rem;
-    width: 49%;
-    overflow-x: scroll;
-    padding: 15px 10px;
+  &.active {
+    background: rgba(0,0,0,0.015);
+    border-style: dashed;
 
-    min-height: 60rem;
-
-    border: 1px solid rgba(0,0,0, 0.1);
-    border-radius: 6px;
+    pre {
+      overflow-x: hidden;
+    }
   }
 }
 
