@@ -40,7 +40,7 @@ class TemplatePage extends Component {
           }
         })
         .catch(error => {
-          console.log('catch', error)
+          console.log(error)
         })
     })
   }

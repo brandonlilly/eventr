@@ -110,7 +110,6 @@ function handleTemplateUpload(req, res) {
         res.status(200).send("success")
       } catch (e) {
         res.status(500).send(e)
-        console.log('cat', e)
       }
     })
     .catch(error => {
