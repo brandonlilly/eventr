@@ -12,7 +12,8 @@ import routes from '../app/routes'
 import busboy from 'connect-busboy'
 import morgan from 'morgan'
 import configureStore from '../app/store/configureStore'
-import { setStyling, setTemplate, setCurrentEvent } from '../app/store'
+import { setStyling, setTemplate, setCurrentEvent, getCurrentEvent } from '../app/store'
+import Handlebars from 'handlebars'
 
 import validateCss from 'css-validator'
 
@@ -30,8 +31,9 @@ store.dispatch(setCurrentEvent(data))
 
 const logger = morgan('tiny')
 app.use(logger)
-app.use('/', Express.static('dist'))
-app.post('/upload', busboy(), handleUpload)
+app.use(Express.static('dist'))
+app.post('/styling', busboy(), handleStylingUpload)
+app.post('/template', busboy(), handleTemplateUpload)
 app.use('/', handleRender)
 
 let cache = {
@@ -83,15 +85,33 @@ function handleRender(req, res) {
   })
 }
 
-function handleUpload(req, res) {
+function handleStylingUpload(req, res) {
   extractFile(req)
     .then(({ contents, extension }) => {
       validateCss({ text: contents }, (error, data) => {
         if (error) return res.status(500).send(error)
         if (data.validity !== true) return res.status(500).send("Invalid css")
 
+        store.dispatch(setStyling(contents))
         res.status(200).send("success")
       })
+    })
+    .catch(error => {
+      res.status(500).send(error)
+    })
+}
+
+function handleTemplateUpload(req, res) {
+  extractFile(req)
+    .then(({ contents, extension }) => {
+      try {
+        Handlebars.compile(contents)({})
+        store.dispatch(setTemplate(contents))
+        res.status(200).send("success")
+      } catch (e) {
+        res.status(500).send(e)
+        console.log('cat', e)
+      }
     })
     .catch(error => {
       res.status(500).send(error)
