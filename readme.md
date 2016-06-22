@@ -1,6 +1,6 @@
 # eventr
 
-### Usage
+Display events in user uploaded templates. Features universal rendering, treeshaking, caching.
 
 #### Setup  
 `git clone https://github.com/brandonlilly/eventr.git`  
