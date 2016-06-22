@@ -15,8 +15,19 @@ h1 {
 
 .presenters {
   list-style: none;
+  padding: 0;
 }
 
 img {
   height: 18rem;
+}
+
+@media only screen and (max-width: 840px) {
+  .columns {
+    justify-content: center;
+    flex-flow: column;
+  }
+  section {
+    margin: 0 auto 40px auto;
+  }
 }

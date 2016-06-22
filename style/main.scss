@@ -152,6 +152,7 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 60rem;
   border: 1px solid rgba(0,0,0, 0.1);
   border-radius: 6px;
+  max-width: 580px;
 
   header {
     $height: 4rem;
@@ -186,6 +187,25 @@ h1, h2, h3, h4, h5, h6 {
 
     pre {
       overflow-x: hidden;
+    }
+  }
+}
+
+@media only screen and (max-width: 780px) {
+  .TemplatePage {
+    .info {
+      text-align: center;
+    }
+
+    .columns {
+      flex-flow: column;
+      justify-content: center;
+
+      .UploadPane {
+        display: block;
+        width: 100%;
+        margin: 0 auto 4rem auto;
+      }
     }
   }
 }

@@ -54,10 +54,11 @@ class TemplatePage extends Component {
           <Nav/>
         </Banner>
         <div className="content">
-          <h1>Template</h1>
-          <p>Customize how your events are displayed.</p>
-          <p>Upload a handlebar template (.hbs) or stylesheet file (.css)</p>
-
+          <span className="info">
+            <h1>Template</h1>
+            <p>Customize how your events are displayed.</p>
+            <p>Upload a handlebar template (.hbs) or stylesheet file (.css)</p>
+          </span>
           <div className="columns">
             <UploadPane onDrop={files => this.upload(files[0], '/template', setTemplate)} title="Template">
               {template}
