@@ -16,3 +16,8 @@ export function padleft(str, width) {
 
   return result
 }
+
+export function ext(filename) {
+  // https://stackoverflow.com/questions/190852/how-can-i-get-file-extensions-with-javascript
+  return filename.substr((~-filename.lastIndexOf(".") >>> 0) + 2);
+}

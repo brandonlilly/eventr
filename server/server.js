@@ -6,13 +6,15 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { RouterContext, match } from 'react-router'
 import { renderFullPage } from './utils'
+import { extractFile } from './utils/file'
 import { Provider } from 'react-redux'
 import routes from '../app/routes'
 import busboy from 'connect-busboy'
-import { StringDecoder } from 'string_decoder'
 import morgan from 'morgan'
 import configureStore from '../app/store/configureStore'
 import { setStyling, setTemplate, setCurrentEvent } from '../app/store'
+
+import validateCss from 'css-validator'
 
 const app = Express()
 const port = 3000
@@ -59,7 +61,7 @@ function renderApp(props, req) {
   )
 
   const page = renderFullPage(markup, store.getState())
-  
+
   cache.page = page
   cache.url = req.url
   cache.stale = false
@@ -82,30 +84,18 @@ function handleRender(req, res) {
 }
 
 function handleUpload(req, res) {
-  req.pipe(req.busboy)
-  req.busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-    if (mimetype === 'text/css') {
-      let contents = ''
-      let decoder = new StringDecoder('utf8')
+  extractFile(req)
+    .then(({ contents, extension }) => {
+      validateCss({ text: contents }, (error, data) => {
+        if (error) return res.status(500).send(error)
+        if (data.validity !== true) return res.status(500).send("Invalid css")
 
-      file.on('data', data => {
-        contents += decoder.write(data)
+        res.status(200).send("success")
       })
-
-      file.on('end', () => {
-        store.dispatch(setStyling(contents))
-      })
-    }
-  })
-
-  req.busboy.on('error', error => {
-    console.error(error)
-    res.send(500, 'Error', error)
-  })
-
-  req.busboy.on('finish', () => {
-    res.status(200).send('success')
-  })
+    })
+    .catch(error => {
+      res.status(500).send(error)
+    })
 }
 
 app.listen(port, () => {

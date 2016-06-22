@@ -20,7 +20,9 @@ class TemplatePage extends Component {
 
         fetch('/upload', { method: 'post', body: fd })
           .then(response => {
-            setStyling(contents)
+            if (response.ok) {
+              setStyling(contents)
+            }
           })
           .catch(error => {
             console.log('catch', error)
@@ -38,7 +40,8 @@ class TemplatePage extends Component {
           <Nav/>
         </Banner>
         <div className="content">
-          <h1>Upload</h1>
+          <h1>Template</h1>
+          <p>Customize how your events are displayed. </p>
           <Uploader onDrop={files => this.onDrop(files)}/>
           <div className="columns">
             <pre>
