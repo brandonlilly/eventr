@@ -1,5 +1,3 @@
-import fs from 'fs'
-import path from 'path'
 import Express from 'express'
 import chalk from 'chalk'
 import React from 'react'
@@ -11,23 +9,13 @@ import { Provider } from 'react-redux'
 import routes from '../app/routes'
 import busboy from 'connect-busboy'
 import morgan from 'morgan'
-import configureStore from '../app/store/configureStore'
-import { setStyling, setTemplate, setCurrentEvent, getCurrentEvent } from '../app/store'
+import createStore from './utils/createStore'
+import { setStyling, setTemplate } from '../app/store'
 import Handlebars from 'handlebars'
-
 import validateCss from 'css-validator'
 
 const app = Express()
 const port = 3000
-
-import data from './event'
-let template = fs.readFileSync(path.resolve(__dirname, 'template/index.hbs'), "utf-8")
-let styling =  fs.readFileSync(path.resolve(__dirname, 'template/index.css'), "utf-8")
-
-const store = configureStore()
-store.dispatch(setStyling(styling))
-store.dispatch(setTemplate(template))
-store.dispatch(setCurrentEvent(data))
 
 const logger = morgan('tiny')
 app.use(logger)
@@ -36,7 +24,9 @@ app.post('/styling', busboy(), handleStylingUpload)
 app.post('/template', busboy(), handleTemplateUpload)
 app.use('/', handleRender)
 
+const store = createStore()
 let cache = {}
+
 store.subscribe(() => {
   cache = {}
 })
