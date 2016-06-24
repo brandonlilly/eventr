@@ -67,8 +67,8 @@ function handleStylingUpload(req, res) {
   extractFile(req)
     .then(({ contents, extension }) => {
       validateCss({ text: contents }, (error, data) => {
-        if (error) return res.status(500).send(error)
-        if (data.validity !== true) return res.status(500).send("Invalid css")
+        if (error) return res.status(422).send(error)
+        if (data.validity !== true) return res.status(422).send("Invalid css")
 
         store.dispatch(setStyling(contents))
         res.status(200).send("success")
@@ -87,7 +87,7 @@ function handleTemplateUpload(req, res) {
         store.dispatch(setTemplate(contents))
         res.status(200).send("success")
       } catch (e) {
-        res.status(500).send(e)
+        res.status(422).send(e)
       }
     })
     .catch(error => {

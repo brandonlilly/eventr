@@ -29,3 +29,14 @@ export const setCurrentEvent = (event) => ({
   type: 'SET_EVENT',
   response: event,
 })
+
+export const saveStyling = (file) => callApi({
+  type: 'SAVE_STYLING',
+  url: '/styling', method: 'post',
+  data: () => { fd = new FormData(); fd.append(file); return fd },
+})
+export const saveTemplate = (styling) => callApi({
+  type: 'SAVE_TEMPLATE',
+  url: '/template', method: 'post',
+  data: template,
+})

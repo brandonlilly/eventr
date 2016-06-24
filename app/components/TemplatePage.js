@@ -5,7 +5,7 @@ import Banner from './Banner'
 import Nav from './Nav'
 import Uploader from './Uploader'
 import { getFileContents } from '../utils'
-import { getStyling, getTemplate, setStyling, setTemplate } from '../store'
+import { getStyling, getTemplate, saveStylingFile, saveTemplateFile } from '../store'
 
 
 const UploadPane = ({ children, title, ...props }) =>
@@ -33,20 +33,12 @@ class TemplatePage extends Component {
       const fd = new FormData()
       fd.append(file.name, file)
 
-      fetch(url, { method: 'post', body: fd })
-        .then(response => {
-          if (response.ok) {
-            action(contents)
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      action(contents)
     })
   }
 
   render() {
-    const { template, styling, setTemplate, setStyling } = this.props
+    const { template, styling, saveTemplateFile, saveStylingFile } = this.props
 
     return (
       <div className="TemplatePage">
@@ -60,10 +52,10 @@ class TemplatePage extends Component {
             <p>Upload a handlebar template (.hbs) or stylesheet file (.css)</p>
           </span>
           <div className="columns">
-            <UploadPane onDrop={files => this.upload(files[0], '/template', setTemplate)} title="Template">
+            <UploadPane onDrop={files => saveTemplateFile(files[0])} title="Template">
               {template}
             </UploadPane>
-            <UploadPane onDrop={files => this.upload(files[0], '/styling', setStyling)} title="Style">
+            <UploadPane onDrop={files => saveStylingFile(files[0])} title="Style">
               {styling}
             </UploadPane>
           </div>
@@ -78,4 +70,4 @@ const mapStateToProps = (state, props) => ({
   styling: getStyling(state),
 })
 
-export default connect(mapStateToProps, { setStyling, setTemplate })(TemplatePage)
+export default connect(mapStateToProps, { saveStylingFile, saveTemplateFile })(TemplatePage)
