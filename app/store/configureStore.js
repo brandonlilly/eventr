@@ -1,7 +1,8 @@
 import { createStore, applyMiddleware } from 'redux'
 import rootReducer from '../store'
+import api from './api'
 
-let middleware = []
+let middleware = [api]
 
 if (process.env.NODE_ENV !== 'production') {
   const createLogger = require('redux-logger')

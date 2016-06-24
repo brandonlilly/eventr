@@ -68,10 +68,10 @@ function handleStylingUpload(req, res) {
     .then(({ contents, extension }) => {
       validateCss({ text: contents }, (error, data) => {
         if (error) return res.status(422).send(error)
-        if (data.validity !== true) return res.status(422).send("Invalid css")
+        if (data.validity !== true) return res.status(422).send("Invalid stylesheet")
 
         store.dispatch(setStyling(contents))
-        res.status(200).send("success")
+        res.status(200).send(contents)
       })
     })
     .catch(error => {
@@ -85,9 +85,9 @@ function handleTemplateUpload(req, res) {
       try {
         Handlebars.compile(contents)({})
         store.dispatch(setTemplate(contents))
-        res.status(200).send("success")
+        res.status(200).send(contents)
       } catch (e) {
-        res.status(422).send(e)
+        res.status(422).send("Invalid handlebars template")
       }
     })
     .catch(error => {

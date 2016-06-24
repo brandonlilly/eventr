@@ -1,36 +1,17 @@
-// callApi({
-//   type: 'SAVE_TEMPLATE',
-//   data: template,
-//   url: '/template',
-//   method: 'post',
-// })
-
 const CALL_API = 'CALL_API'
 
-export function callApi({ types, url, method = 'get', data }) => ({
-  CALL_API: {
-    types, method, data, url
+export const callApi = ({ type, url, method = 'get', data, ...rest }) => ({
+  [CALL_API]: {
+    ...rest, type, method, data, url
   }
 })
 
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300 && response.ok) {
-    return response
-  } else {
-    var error = new Error(response.statusText)
-    error.response = response
-    throw error
-  }
-}
-
-export default apiMiddleware = store => next => rawAction => {
-  const apiAction = rawAction[CALL_API]
-
-  if (!apiAction) {
+const apiMiddleware = store => next => action => {
+  if (!action[CALL_API]) {
     return next(action)
   }
 
-  let { url, type, method, data, ...rest } = apiAction
+  let { url, type, method, data, ...rest } = action[CALL_API]
 
   if (typeof url === 'function') {
     url = url(store.getState())
@@ -43,19 +24,22 @@ export default apiMiddleware = store => next => rawAction => {
   const newAction = obj => next({ ...rest, ...obj })
 
   newAction({ type: ACTION_REQUEST })
-
   fetch(url, { method: 'post', body: data })
     .then(response => {
-      response.text().then(data => {
-        newAction({
-          type: response.ok ? ACTION_SUCCESS : ACTION_FAILURE,
-          response: data || response.statusText
+      response.text()
+        .then(data => {
+          newAction({
+            type: response.ok ? ACTION_SUCCESS : ACTION_FAILURE,
+            response: data || response.statusText
+          })
         })
-      }).catch(error => {
-        newAction({ type: ACTION_FAILURE, response: error })
-      })
+        .catch(error => {
+          newAction({ type: ACTION_FAILURE, response: 'Save failed' })
+        })
     })
     .catch(error => {
-      newAction({ type: ACTION_FAILURE, response: error })
-    }
+      newAction({ type: ACTION_FAILURE, response: 'Save failed' })
+    })
 }
+
+export default apiMiddleware

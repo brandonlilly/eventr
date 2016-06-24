@@ -21,3 +21,9 @@ export function ext(filename) {
   // https://stackoverflow.com/questions/190852/how-can-i-get-file-extensions-with-javascript
   return filename.substr((~-filename.lastIndexOf(".") >>> 0) + 2);
 }
+
+export function fdAppend(file) {
+  const fd = new FormData()
+  fd.append(file.name, file)
+  return fd
+}

@@ -8,13 +8,14 @@ import { getFileContents } from '../utils'
 import { getStyling, getTemplate, saveStylingFile, saveTemplateFile } from '../store'
 
 
-const UploadPane = ({ children, title, ...props }) =>
+const UploadPane = ({ children, title, onDrop, ...props }) =>
   <Dropzone
     {...props}
     className="UploadPane"
     multiple={false}
     disableClick={true}
-    activeClassName="active">
+    activeClassName="active"
+    onDrop={files => onDrop(files[0])}>
     <header>
       <Uploader onDrop={props.onDrop}/>
       <h1>{title}</h1>
@@ -26,17 +27,6 @@ const UploadPane = ({ children, title, ...props }) =>
 
 
 class TemplatePage extends Component {
-  upload(file, url, action) {
-    const { setStyling } = this.props
-
-    getFileContents(file, contents => {
-      const fd = new FormData()
-      fd.append(file.name, file)
-
-      action(contents)
-    })
-  }
-
   render() {
     const { template, styling, saveTemplateFile, saveStylingFile } = this.props
 
@@ -52,10 +42,10 @@ class TemplatePage extends Component {
             <p>Upload a handlebar template (.hbs) or stylesheet file (.css)</p>
           </span>
           <div className="columns">
-            <UploadPane onDrop={files => saveTemplateFile(files[0])} title="Template">
+            <UploadPane onDrop={saveTemplateFile} title="Template">
               {template}
             </UploadPane>
-            <UploadPane onDrop={files => saveStylingFile(files[0])} title="Style">
+            <UploadPane onDrop={saveStylingFile} title="Style">
               {styling}
             </UploadPane>
           </div>

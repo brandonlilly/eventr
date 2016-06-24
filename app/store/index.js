@@ -1,9 +1,13 @@
+import { callApi } from './api'
 import { formatEvent } from '../utils/format'
+import { fdAppend } from '../utils'
 
 export default function rootReducer(state = {}, action) {
   switch (action.type) {
+    case 'SAVE_STYLING_SUCCESS':
     case 'SET_STYLING':
       return { ...state, styling: action.response }
+    case 'SAVE_TEMPLATE_SUCCESS':
     case 'SET_TEMPLATE':
       return { ...state, template: action.response }
     case 'SET_EVENT':
@@ -30,13 +34,13 @@ export const setCurrentEvent = (event) => ({
   response: event,
 })
 
-export const saveStyling = (file) => callApi({
+export const saveStylingFile = (file) => callApi({
   type: 'SAVE_STYLING',
   url: '/styling', method: 'post',
-  data: () => { fd = new FormData(); fd.append(file); return fd },
+  data: fdAppend(file),
 })
-export const saveTemplate = (styling) => callApi({
+export const saveTemplateFile = (file) => callApi({
   type: 'SAVE_TEMPLATE',
   url: '/template', method: 'post',
-  data: template,
+  data: fdAppend(file),
 })
